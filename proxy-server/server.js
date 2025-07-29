@@ -1,5 +1,5 @@
-// Proxy Server para contornar CORS
-// Execute com: node proxy-server.js
+// Proxy Server para contornar CORS do Belle Biju
+// Execute com: node server.js
 
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
@@ -32,10 +32,10 @@ app.use(
     pathRewrite: {
       "^/api": "/api", // manter o path /api
     },
-    onProxyReq: (proxyReq, req, res) => {
+    onProxyReq: (proxyReq, req) => {
       console.log(`🌐 Proxy: ${req.method} ${req.url} -> ${proxyReq.path}`);
     },
-    onProxyRes: (proxyRes, req, res) => {
+    onProxyRes: (proxyRes, req) => {
       console.log(`✅ Proxy Response: ${proxyRes.statusCode} ${req.url}`);
     },
     onError: (err, req, res) => {
@@ -58,7 +58,9 @@ app.listen(PORT, () => {
   console.log(`🔗 Health check: http://localhost:${PORT}/health`);
 });
 
-// Para usar este proxy, você precisaria:
-// 1. Instalar dependências: npm install express http-proxy-middleware cors
-// 2. Deployar este proxy em um serviço como Railway, Heroku, etc.
-// 3. Atualizar a baseURL no frontend para apontar para este proxy
+// Para usar este proxy:
+// 1. cd proxy-server
+// 2. npm install
+// 3. npm start
+// 4. Deployar em Railway, Heroku, etc.
+// 5. Atualizar baseURL no frontend para apontar para este proxy
